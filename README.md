@@ -7,20 +7,19 @@ Copyright © 2005, Christopher Alan Mosher, Shelton, Connecticut, USA, <cmosher0
 [![Build Status](https://travis-ci.com/cmosher01/Howard-Garns.svg?branch=master)](https://travis-ci.com/cmosher01/Howard-Garns)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CVSSQ2BWDCKQ2)
 
-Howard Garns invented "Number Place," today known as Sudoku.
+Howard Garns invented “Number Place”, which is now known as “Sudoku” or “数独”.
 
-I wrote the HowardGarns program to replace pencil and paper (and eraser)
+I wrote the **Howard-Garns** application to replace pencil and paper (and eraser)
 while you solve Sudoku puzzles.
 
 # Simple Instructions
 
 ## New Puzzle
 
-Use File/New to enter the numbers for the puzzle you want to solve. Puzzles are not generated
-by the program; you need to get them from some other source.
+Use **File** > **New** to enter the numbers for the puzzle you want to solve.
 
-Here is a simple puzzle to get you started. Just select the numbers below, Ctrl-C to copy, then
-run the program, Ctrl-N for New, and Ctrl-V to paste.
+Here is a simple puzzle to get you started. Just select the numbers below, **Ctrl-C** to copy, then
+run the program, choose **File** > **Paste as New**
 
     100000239
     204000000
@@ -34,7 +33,7 @@ run the program, Ctrl-N for New, and Ctrl-V to paste.
 
 You should look at other web sites for games in this easy text format, so you can just
 copy and paste. Otherwise, you can manually enter the numbers for each square, using
-zero for the empty squares. (You will be entering 81 numbers.)
+zero for the empty squares.
 
 ## Possibilities
 
@@ -45,14 +44,14 @@ does indeed contain that number.
 
 ## Rote Solving Assistants
 
-The Solve menu lets you have the program do some of the rote logical patterns, such as
+The **Solve** menu lets you have the program do some of the rote logical patterns, such as
 eliminating possibilities from the same row, column, or box as an already identified answer.
-The different solvers are listed under the Solve menu; you can check the ones you want to
+The different solvers are listed under the **Solve menu**; you can check the ones you want to
 have enabled, and uncheck the ones you want turned off.
 
 There are two ways to have the program solve for you: manually or automatically, which
-you can choose at the top of the Solve menu.
-*Manually* means that you choose "Solve" from the solve menu when you want the program to
+you can choose at the top of the **Solve** menu.
+*Manually* means that you choose **Solve** from the **Solve** menu when you want the program to
 apply the (check-marked) solution patterns.
 *Automatically* means that the program will apply them after every move you make. Note that
 this may lead to some confusing results, in which case you may want to try turning off the
@@ -60,11 +59,11 @@ automatic solving.
 
 ## Undo and Redo
 
-The program provides undo and redo support, under the Edit menu. You can undo all your
+The program provides undo and redo support, under the **Edit** menu. You can undo all your
 previous moves, or redo them again up to any point.
 
 ## Saving and Resuming
 
-You can use File/Save, Save As..., and Open..., to save and resume the puzzle. All your moves
+You can use **File** > **Save**, **Save As…**, and **Open…**, to save and resume the puzzle. All your moves
 are saved, from the initial puzzle state up to the current state of the puzzle. The file
 is a text file. Each move also has the time the move was made saved with it.
