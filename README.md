@@ -16,10 +16,10 @@ while you solve Sudoku puzzles.
 
 ## New Puzzle
 
-Use **File** > **New** to enter the numbers for the puzzle you want to solve.
+Use **File&nbsp;>&nbsp;New** to enter the numbers for the puzzle you want to solve.
 
 Here is a simple puzzle to get you started. Just select the numbers below, **Ctrl-C** to copy, then
-run the program, choose **File** > **Paste as New**
+run the program, choose **File&nbsp;>&nbsp;Paste&nbsp;as&nbsp;New**
 
     100000239
     204000000
@@ -46,7 +46,7 @@ does indeed contain that number.
 
 The **Solve** menu lets you have the program do some of the rote logical patterns, such as
 eliminating possibilities from the same row, column, or box as an already identified answer.
-The different solvers are listed under the **Solve menu**; you can check the ones you want to
+The different solvers are listed under the **Solve** menu; you can check the ones you want to
 have enabled, and uncheck the ones you want turned off.
 
 There are two ways to have the program solve for you: manually or automatically, which
@@ -64,6 +64,6 @@ previous moves, or redo them again up to any point.
 
 ## Saving and Resuming
 
-You can use **File** > **Save**, **Save As…**, and **Open…**, to save and resume the puzzle. All your moves
+In the **File** menu, you can use **Save**, **Save&nbsp;As…**, and **Open…**, to save and resume the puzzle. All your moves
 are saved, from the initial puzzle state up to the current state of the puzzle. The file
 is a text file. Each move also has the time the move was made saved with it.
