@@ -8,7 +8,7 @@ apply plugin: 'application'
 
 group 'nu.mine.mosher.sudoku'
 mainClassName = 'nu.mine.mosher.sudoku.HowardGarns'
-version '1.0.0-SNAPSHOT'
+version '1.1.0'
 
 dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: 'latest.release'
