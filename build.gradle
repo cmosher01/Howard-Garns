@@ -1,0 +1,20 @@
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+group 'nu.mine.mosher.sudoku'
+mainClassName = 'nu.mine.mosher.sudoku.HowardGarns'
+version '1.0.0-SNAPSHOT'
+
+dependencies {
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: 'latest.release'
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: 'latest.release'
+}
+
+test {
+    useJUnitPlatform()
+}
