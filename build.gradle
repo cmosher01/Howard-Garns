@@ -1,20 +1,9 @@
-repositories {
-    mavenCentral()
-    jcenter()
+def inc(module) {
+    apply from: "${projectDir}/gradle/${module}.gradle"
 }
 
-apply plugin: 'java'
-apply plugin: 'application'
-
-group 'nu.mine.mosher.sudoku'
-mainClassName = 'nu.mine.mosher.sudoku.HowardGarns'
-version '1.1.0'
-
-dependencies {
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: 'latest.release'
-    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: 'latest.release'
-}
-
-test {
-    useJUnitPlatform()
-}
+inc('version')
+inc('project')
+inc('dependencies')
+inc('test')
+inc('package')
