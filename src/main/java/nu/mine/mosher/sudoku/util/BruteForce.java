@@ -18,7 +18,7 @@ import nu.mine.mosher.sudoku.state.MoveAutomationType;
 
 /**
  * Not thread-safe.
- * 
+ *
  * @author Chris Mosher
  */
 public class BruteForce {
@@ -42,7 +42,7 @@ public class BruteForce {
 	public String getFirstSolution() {
 		this.cSolution = 0;
 
-		return brute(this.game, false, false);
+		return brute(this.game, false, true);
 	}
 
 	public boolean hasUniqueSolution() {
