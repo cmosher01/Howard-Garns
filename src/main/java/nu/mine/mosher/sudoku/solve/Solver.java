@@ -4,5 +4,5 @@
 package nu.mine.mosher.sudoku.solve;
 
 interface Solver {
-	boolean solve();
+    boolean solve();
 }

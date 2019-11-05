@@ -11,9 +11,11 @@ import nu.mine.mosher.sudoku.solve.SolverManager;
 import nu.mine.mosher.sudoku.state.GameManager;
 
 import javax.swing.*;
+import java.awt.Toolkit;
 import java.awt.event.*;
 import java.io.Closeable;
 import java.lang.reflect.InvocationTargetException;
+import java.util.prefs.Preferences;
 
 /**
  * The main GUI for the whole program.
@@ -21,6 +23,10 @@ import java.lang.reflect.InvocationTargetException;
  * @author Chris Mosher
  */
 public class HowardGarns implements Runnable, Closeable {
+    public static Preferences prefs() {
+        return Preferences.userNodeForPackage(HowardGarns.class);
+    }
+
     /**
      * Main program entry point. Instantiate a HowardGarns object (on the main
      * thread) and runs it on Swing's event dispatch thread.
@@ -56,14 +62,6 @@ public class HowardGarns implements Runnable, Closeable {
         this.game.addObserver((observableThatChanged, typeOfChange) -> updateGameChange());
     }
 
-    private WindowAdapter closer() {
-        return new WindowAdapter() {
-            @Override
-            public void windowClosing(final WindowEvent e) {
-                close();
-            }
-        };
-    }
 
 
     private final GameManager game = new GameManager();
@@ -74,6 +72,15 @@ public class HowardGarns implements Runnable, Closeable {
 
     private HowardGarns() {
         // instantiated by main only
+    }
+
+    private WindowAdapter closer() {
+        return new WindowAdapter() {
+            @Override
+            public void windowClosing(final WindowEvent e) {
+                close();
+            }
+        };
     }
 
     private void updateGameChange() {
@@ -118,8 +125,9 @@ public class HowardGarns implements Runnable, Closeable {
     }
 
     private void appendMenuItems(final JMenu menu) {
-        final JMenuItem itemFileExit = new JMenuItem("Exit");
-        itemFileExit.setMnemonic(KeyEvent.VK_X);
+        final JMenuItem itemFileExit = new JMenuItem("Quit");
+        itemFileExit.setMnemonic(KeyEvent.VK_Q);
+        itemFileExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         itemFileExit.addActionListener(e -> close());
         menu.add(itemFileExit);
     }

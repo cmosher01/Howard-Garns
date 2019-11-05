@@ -34,14 +34,18 @@ public class Generator {
 
 
 
-    private static final int MAX_ITER = 449;
     private static final int ORDER = 3;
     private static final int DIM = ORDER * ORDER;
     private static final int ELEMENTS = DIM * DIM;
-    private static final Random rng = new Random();
+    private static final int MAX_ITER = 449;
     private static final int ALL_VALUES = (1 << DIM) - 1;
+    private static final Random rng = new Random();
 
-
+    private static class SolveContext {
+        int branchScore;
+        int count;
+        int[] problem = new int[ELEMENTS];
+    }
 
     private static int singleton(int v) {
         return 1 << (v - 1);
@@ -119,12 +123,6 @@ public class Generator {
             }
         }
         return best_index;
-    }
-
-    private static class SolveContext {
-        int[] problem = new int[ELEMENTS];
-        int count;
-        int branchScore;
     }
 
     private static void solveRcr(SolveContext ctx, int[] freedom, int diff) {

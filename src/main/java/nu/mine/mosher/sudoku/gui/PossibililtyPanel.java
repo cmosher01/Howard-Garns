@@ -3,89 +3,81 @@
  */
 package nu.mine.mosher.sudoku.gui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
+import nu.mine.mosher.sudoku.state.*;
 
 import javax.swing.JPanel;
-
-import nu.mine.mosher.sudoku.state.GameManager;
-import nu.mine.mosher.sudoku.state.MoveAutomationType;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.geom.Rectangle2D;
 
 class PossibililtyPanel extends JPanel {
-	private static final Color COLOR_POSSIBILITY = new Color(96, 128, 0);
+    public PossibililtyPanel(final GameManager game, final int iSbox, final int iSquare, final int i) {
+        this.game = game;
+        this.iSbox = iSbox;
+        this.iSquare = iSquare;
+        this.iPoss = i;
 
-	private final GameManager game;
-	private final int iSbox;
-	private final int iSquare;
-	private final int iPoss;
+        setOpaque(false);
 
-	public PossibililtyPanel(final GameManager game, final int iSbox, final int iSquare, final int i) {
-		this.game = game;
-		this.iSbox = iSbox;
-		this.iSquare = iSquare;
-		this.iPoss = i;
+        setPreferredSize(new Dimension(30, 30));
 
-		setOpaque(false);
+        setForeground(COLOR_POSSIBILITY);
 
-		setPreferredSize(new Dimension(30, 30));
+        addMouseListener(new MouseAdapter() {
+            @SuppressWarnings("synthetic-access")
+            @Override
+            public void mouseClicked(final MouseEvent e) {
+                mouseCicked(e);
+            }
+        });
+    }
 
-		setForeground(COLOR_POSSIBILITY);
+    @Override
+    protected void paintComponent(final Graphics g) {
+        super.paintComponent(g);
 
-		addMouseListener(new MouseAdapter() {
-			@SuppressWarnings("synthetic-access")
-			@Override
-			public void mouseClicked(final MouseEvent e) {
-				mouseCicked(e);
-			}
-		});
-	}
+        if (this.game.hasAnswer(this.iSbox, this.iSquare)) {
+            return;
+        }
 
-	@Override
-	protected void paintComponent(final Graphics g) {
-		super.paintComponent(g);
+        if (this.game.isEliminated(this.iSbox, this.iSquare, this.iPoss)) {
+            return;
+        }
 
-		if (this.game.hasAnswer(this.iSbox, this.iSquare)) {
-			return;
-		}
+        final String sPoss = Integer.toString(this.iPoss + 1);
+        drawCentered(sPoss, g);
+    }
+    private static final Color COLOR_POSSIBILITY = new Color(96, 128, 0);
+    private final GameManager game;
+    private final int iPoss;
+    private final int iSbox;
+    private final int iSquare;
 
-		if (this.game.isEliminated(this.iSbox, this.iSquare, this.iPoss)) {
-			return;
-		}
+    private void drawCentered(final String sPoss, final Graphics g) {
+        final FontMetrics fontMetrics = g.getFontMetrics();
 
-		final String sPoss = Integer.toString(this.iPoss + 1);
-		drawCentered(sPoss, g);
-	}
+        final Rectangle2D bounds = fontMetrics.getStringBounds(sPoss, g);
+        final int textHeight = (int) (bounds.getHeight());
+        final int textWidth = (int) (bounds.getWidth());
 
-	private void drawCentered(final String sPoss, final Graphics g) {
-		final FontMetrics fontMetrics = g.getFontMetrics();
+        final int x = (getWidth() - textWidth) / 2;
+        final int y = (getHeight() - textHeight) / 2 + fontMetrics.getAscent();
 
-		final Rectangle2D bounds = fontMetrics.getStringBounds(sPoss, g);
-		final int textHeight = (int) (bounds.getHeight());
-		final int textWidth = (int) (bounds.getWidth());
+        g.drawString(sPoss, x, y);
+    }
 
-		final int x = (getWidth() - textWidth) / 2;
-		final int y = (getHeight() - textHeight) / 2 + fontMetrics.getAscent();
+    private void mouseCicked(final MouseEvent e) {
+        final boolean hasAnswer = this.game.hasAnswer(this.iSbox, this.iSquare);
+        final boolean isAnswer = !this.game.isEliminated(this.iSbox, this.iSquare, this.iPoss);
 
-		g.drawString(sPoss, x, y);
-	}
-
-	private void mouseCicked(final MouseEvent e) {
-		final boolean hasAnswer = this.game.hasAnswer(this.iSbox, this.iSquare);
-		final boolean isAnswer = !this.game.isEliminated(this.iSbox, this.iSquare, this.iPoss);
-
-		if (e.getButton() == MouseEvent.BUTTON1) {
-			if (!(hasAnswer && isAnswer)) {
-				this.game.toggle(this.iSbox, this.iSquare, this.iPoss, MoveAutomationType.MANUAL);
-			}
-		} else if (e.getButton() == MouseEvent.BUTTON3) {
-			if (!hasAnswer) {
-				this.game.keep(this.iSbox, this.iSquare, this.iPoss, MoveAutomationType.MANUAL);
-			}
-		}
-	}
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            if (!(hasAnswer && isAnswer)) {
+                this.game.toggle(this.iSbox, this.iSquare, this.iPoss, MoveAutomationType.MANUAL);
+            }
+        } else if (e.getButton() == MouseEvent.BUTTON3) {
+            if (!hasAnswer) {
+                this.game.keep(this.iSbox, this.iSquare, this.iPoss, MoveAutomationType.MANUAL);
+            }
+        }
+    }
 }

@@ -10,22 +10,12 @@ import nu.mine.mosher.sudoku.state.GameManager;
 import nu.mine.mosher.sudoku.util.BruteForce;
 
 import javax.swing.*;
+import java.awt.Toolkit;
 import java.awt.event.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class FileManager {
-    private JMenuItem itemFileNew;
-    private JMenuItem itemFileOpen;
-    private JMenuItem itemFileSave;
-    private JMenuItem itemFileSaveAs;
-
-    private final GameManager game;
-    private final FrameManager framer;
-
-    private File file;
-    private GameManager gameLastSaved;
-
     public FileManager(final GameManager game, final FrameManager framer) {
         this.game = game;
         this.framer = framer;
@@ -35,7 +25,7 @@ public class FileManager {
     public void appendMenuItems(final JMenu appendTo) {
         this.itemFileNew = new JMenuItem("New");
         this.itemFileNew.setMnemonic(KeyEvent.VK_N);
-        this.itemFileNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
+        this.itemFileNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         this.itemFileNew.addActionListener(e -> {
             try {
                 fileGenNew();
@@ -57,7 +47,7 @@ public class FileManager {
 
         this.itemFileOpen = new JMenuItem("Open\u2026");
         this.itemFileOpen.setMnemonic(KeyEvent.VK_O);
-        this.itemFileOpen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
+        this.itemFileOpen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         this.itemFileOpen.addActionListener(e -> {
             try {
                 fileOpen();
@@ -69,7 +59,7 @@ public class FileManager {
 
         this.itemFileSave = new JMenuItem("Save");
         this.itemFileSave.setMnemonic(KeyEvent.VK_S);
-        this.itemFileSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
+        this.itemFileSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         this.itemFileSave.addActionListener(e -> {
             try {
                 fileSave();
@@ -81,7 +71,7 @@ public class FileManager {
 
         this.itemFileSaveAs = new JMenuItem("Save As\u2026");
         this.itemFileSaveAs.setMnemonic(KeyEvent.VK_A);
-        this.itemFileSaveAs.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
+        this.itemFileSaveAs.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         this.itemFileSaveAs.addActionListener(e -> {
             try {
                 fileSaveAs();
@@ -99,6 +89,26 @@ public class FileManager {
         this.itemFileSaveAs.setEnabled(true);
     }
 
+    public void verifyLoseUnsavedChanges() throws UserCancelled {
+        if (this.game.equals(this.gameLastSaved)) {
+            return;
+        }
+        if (!this.framer.askOK("Your current game will be DISCARDED. Is this OK?")) {
+            throw new UserCancelled();
+        }
+    }
+
+
+
+    private final FrameManager framer;
+    private final GameManager game;
+    private File file;
+    private GameManager gameLastSaved;
+    private JMenuItem itemFileNew;
+    private JMenuItem itemFileOpen;
+    private JMenuItem itemFileSave;
+    private JMenuItem itemFileSaveAs;
+
     private void fileSaveAs() {
         try {
             this.file = this.framer.getFileToSave(this.file);
@@ -113,7 +123,7 @@ public class FileManager {
         try {
             out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(this.file), StandardCharsets.UTF_8));
             this.game.write(out);
-            this.gameLastSaved = (GameManager) this.game.clone();
+            this.gameLastSaved = (GameManager)this.game.clone();
         } catch (final Throwable e) {
             e.printStackTrace();
             this.framer.showMessage(e.getLocalizedMessage());
@@ -132,10 +142,10 @@ public class FileManager {
         BufferedReader in = null;
         try {
             verifyLoseUnsavedChanges();
-            this.file = this.framer.getFileToOpen(this.file);
+            this.file = this.framer.getFileToOpen();
             in = new BufferedReader(new InputStreamReader(new FileInputStream(this.file), StandardCharsets.UTF_8));
             this.game.read(in);
-            this.gameLastSaved = (GameManager) this.game.clone();
+            this.gameLastSaved = (GameManager)this.game.clone();
             verifyUniqueSolution();
         } catch (final UserCancelled cancelled) {
             // user pressed the cancel button, so just return
@@ -159,19 +169,10 @@ public class FileManager {
             final String sBoard = this.framer.getBoardStringFromUser();
             this.file = null;
             this.game.read(sBoard);
-            this.gameLastSaved = (GameManager) this.game.clone();
+            this.gameLastSaved = (GameManager)this.game.clone();
             verifyUniqueSolution();
         } catch (UserCancelled e) {
             // user pressed the cancel button, so just return
-        }
-    }
-
-    public void verifyLoseUnsavedChanges() throws UserCancelled {
-        if (this.game.equals(this.gameLastSaved)) {
-            return;
-        }
-        if (!this.framer.askOK("Your current game will be DISCARDED. Is this OK?")) {
-            throw new UserCancelled();
         }
     }
 
@@ -179,14 +180,10 @@ public class FileManager {
         final BruteForce brute = new BruteForce(this.game);
         final int cSolution = brute.countSolutions();
         if (cSolution < 1) {
-            if (!this.framer.askOK("There is actually no solution to this puzzle. Are you sure you want to play it?")) {
-                throw new UserCancelled();
-            }
+            this.framer.tell("This is not a valid Sudoku, because it does not have a solution.");
         }
         if (1 < cSolution) {
-            if (!this.framer.askOK("This puzzle actually has " + cSolution + " solutions. Are you sure you want to play it?")) {
-                throw new UserCancelled();
-            }
+            this.framer.tell("This is not a valid Sudoku, because it has " + cSolution + " solutions.");
         }
     }
 
@@ -195,7 +192,7 @@ public class FileManager {
             verifyLoseUnsavedChanges();
             this.file = null;
             this.game.read(Generator.generate());
-            this.gameLastSaved = (GameManager) this.game.clone();
+            this.gameLastSaved = (GameManager)this.game.clone();
         } catch (UserCancelled e) {
             // user pressed the cancel button, so just return
         }
