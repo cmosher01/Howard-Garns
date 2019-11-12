@@ -176,7 +176,7 @@ public class FileManager {
         }
     }
 
-    private void verifyUniqueSolution() throws UserCancelled {
+    private void verifyUniqueSolution() {
         final BruteForce brute = new BruteForce(this.game);
         final int cSolution = brute.countSolutions();
         if (cSolution < 1) {
