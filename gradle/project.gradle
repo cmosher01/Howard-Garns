@@ -4,7 +4,6 @@ group = 'nu.mine.mosher.sudoku'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
-    withSourcesJar()
 }
 
 application {
