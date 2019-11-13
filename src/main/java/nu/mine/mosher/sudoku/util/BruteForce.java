@@ -3,12 +3,16 @@
  */
 package nu.mine.mosher.sudoku.util;
 
+
+
 import nu.mine.mosher.sudoku.check.CheckerManager;
 import nu.mine.mosher.sudoku.solve.SolverManager;
 import nu.mine.mosher.sudoku.state.*;
 
 import javax.swing.JMenu;
 import java.util.*;
+
+
 
 /**
  * Not thread-safe.
@@ -23,7 +27,9 @@ public class BruteForce {
 
     public int countSolutions() {
         this.cSolution = 0;
+
         brute(this.game);
+
         return this.cSolution;
     }
 
@@ -34,7 +40,7 @@ public class BruteForce {
 
     private void brute(final GameManager gameSoFar) {
         final SolverManager solver = new SolverManager(gameSoFar);
-        solver.appendMenuItems(new JMenu());
+        solver.appendMenuItems(new JMenu(), true);
         solver.solve();
         solver.close();
 
@@ -67,6 +73,7 @@ public class BruteForce {
             if (!gameSoFar.isEliminated(sboxEmpty, squareEmpty, iPoss)) {
                 final GameManager trial = (GameManager) gameSoFar.clone();
                 trial.keep(sboxEmpty, squareEmpty, iPoss, MoveAutomationType.AUTOMATIC);
+                brute(trial);
             }
         }
     }

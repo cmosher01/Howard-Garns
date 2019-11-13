@@ -10,6 +10,10 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.*;
 
+import static javax.swing.JComponent.WHEN_FOCUSED;
+
+
+
 class NewBoardEntry extends JDialog {
     public NewBoardEntry(final Frame owner) throws HeadlessException {
         super(owner, "Enter New Puzzle", MODAL);
@@ -42,7 +46,7 @@ class NewBoardEntry extends JDialog {
         panelLabel.add(labelLine1);
         final JLabel labelLine2 = new JLabel("left to right, and top to bottom. Enter a zero (0) to indicate an empty");
         panelLabel.add(labelLine2);
-        final JLabel labelLine3 = new JLabel("square. Enter a total of 81 numbers. Note that you can use Ctrl-V to paste.");
+        final JLabel labelLine3 = new JLabel("square. Enter a total of 81 numbers. You can paste from the clipboard.");
         panelLabel.add(labelLine3);
 
         panelLabel.setBorder(BorderFactory.createEmptyBorder(7, 7, 7, 7));
@@ -57,6 +61,18 @@ class NewBoardEntry extends JDialog {
 
         this.textEntry.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED),
             BorderFactory.createBevelBorder(BevelBorder.LOWERED)));
+
+        // bind meta-V keystroke to a "Paste" command.
+        final InputMap im = new InputMap();
+        im.setParent(this.textEntry.getInputMap(WHEN_FOCUSED));
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()), "Paste");
+        this.textEntry.setInputMap(WHEN_FOCUSED, im);
+
+        // bind "Paste" command to a pre-defined paste Action
+        final ActionMap am = new ActionMap();
+        am.setParent(this.textEntry.getActionMap());
+        am.put("Paste", TransferHandler.getPasteAction());
+        this.textEntry.setActionMap(am);
 
         getContentPane().add(this.textEntry, BorderLayout.CENTER);
     }

@@ -36,6 +36,7 @@ public class FileManager {
         appendTo.add(this.itemFileNew);
 
         this.itemFileNew = new JMenuItem("Paste as New");
+        this.itemFileNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         this.itemFileNew.addActionListener(e -> {
             try {
                 fileNew();
@@ -193,6 +194,7 @@ public class FileManager {
             this.file = null;
             this.game.read(Generator.generate());
             this.gameLastSaved = (GameManager)this.game.clone();
+            verifyUniqueSolution();
         } catch (UserCancelled e) {
             // user pressed the cancel button, so just return
         }

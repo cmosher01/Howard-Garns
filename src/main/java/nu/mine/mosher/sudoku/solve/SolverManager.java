@@ -38,6 +38,10 @@ public class SolverManager {
     }
 
     public void appendMenuItems(final JMenu appendTo) {
+        appendMenuItems(appendTo, false);
+    }
+
+    public void appendMenuItems(final JMenu appendTo, boolean forceAllOn) {
         this.itemSolve = new JMenuItem("Solve");
         this.itemSolve.setMnemonic(KeyEvent.VK_S);
         this.itemSolve.addActionListener(e -> solve());
@@ -45,7 +49,7 @@ public class SolverManager {
 
         this.itemAutomatic = new JCheckBoxMenuItem("Automatically");
         this.itemAutomatic.setMnemonic(KeyEvent.VK_A);
-        this.itemAutomatic.setSelected(getPref("autoSolve"));
+        this.itemAutomatic.setSelected(getPref("autoSolve") || forceAllOn);
         this.itemAutomatic.addActionListener(e -> {
             setPref("autoSolve", e);
             autoSolveIfSelected();
@@ -57,27 +61,27 @@ public class SolverManager {
 
         this.itemEliminateFromSameRow = new JCheckBoxMenuItem("Eliminate From Same Row");
         this.itemEliminateFromSameRow.addActionListener(e -> setPref("elimRow", e));
-        this.itemEliminateFromSameRow.setSelected(getPref("elimRow"));
+        this.itemEliminateFromSameRow.setSelected(getPref("elimRow") || forceAllOn);
         appendTo.add(this.itemEliminateFromSameRow);
         this.itemEliminateFromSameColumn = new JCheckBoxMenuItem("Eliminate From Same Column");
         this.itemEliminateFromSameColumn.addActionListener(e -> setPref("elimCol", e));
-        this.itemEliminateFromSameColumn.setSelected(getPref("elimCol"));
+        this.itemEliminateFromSameColumn.setSelected(getPref("elimCol") || forceAllOn);
         appendTo.add(this.itemEliminateFromSameColumn);
         this.itemEliminateFromSameSBox = new JCheckBoxMenuItem("Eliminate From Same Box");
         this.itemEliminateFromSameSBox.addActionListener(e -> setPref("elimBox", e));
-        this.itemEliminateFromSameSBox.setSelected(getPref("elimBox"));
+        this.itemEliminateFromSameSBox.setSelected(getPref("elimBox") || forceAllOn);
         appendTo.add(this.itemEliminateFromSameSBox);
         this.itemAffirmSingletonsInRow = new JCheckBoxMenuItem("Affirm Singles in Same Row");
         this.itemAffirmSingletonsInRow.addActionListener(e -> setPref("afirmRow", e));
-        this.itemAffirmSingletonsInRow.setSelected(getPref("afirmRow"));
+        this.itemAffirmSingletonsInRow.setSelected(getPref("afirmRow") || forceAllOn);
         appendTo.add(this.itemAffirmSingletonsInRow);
         this.itemAffirmSingletonsInColumn = new JCheckBoxMenuItem("Affirm Singles in Same Column");
         this.itemAffirmSingletonsInColumn.addActionListener(e -> setPref("afirmCol", e));
-        this.itemAffirmSingletonsInColumn.setSelected(getPref("afirmCol"));
+        this.itemAffirmSingletonsInColumn.setSelected(getPref("afirmCol") || forceAllOn);
         appendTo.add(this.itemAffirmSingletonsInColumn);
         this.itemAffirmSingletonsInSBox = new JCheckBoxMenuItem("Affirm Singles in Same Box");
         this.itemAffirmSingletonsInSBox.addActionListener(e -> setPref("afirmBox", e));
-        this.itemAffirmSingletonsInSBox.setSelected(getPref("afirmBox"));
+        this.itemAffirmSingletonsInSBox.setSelected(getPref("afirmBox") || forceAllOn);
         appendTo.add(this.itemAffirmSingletonsInSBox);
     }
 
