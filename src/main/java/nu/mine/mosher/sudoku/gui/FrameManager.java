@@ -101,6 +101,10 @@ public class FrameManager implements Closeable {
         // Create and set up the content pane.
         this.frame.setContentPane(new Board(this.game));
 
+        this.frame.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        this.frame.getGlassPane().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        this.frame.getLayeredPane().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+
         // Set the window's size and position.
         this.frame.pack();
         this.frame.setLocationRelativeTo(null);
