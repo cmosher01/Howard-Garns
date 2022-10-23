@@ -6,7 +6,6 @@ package nu.mine.mosher.sudoku.state;
 import java.text.ParseException;
 import java.time.ZonedDateTime;
 import java.util.StringTokenizer;
-import java.util.regex.*;
 
 /**
  * Represents one move in the game. This will usually be the elimination of one

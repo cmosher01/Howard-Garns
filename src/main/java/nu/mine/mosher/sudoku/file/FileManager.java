@@ -11,7 +11,7 @@ import nu.mine.mosher.sudoku.util.BruteForce;
 
 import javax.swing.*;
 import java.awt.Toolkit;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 

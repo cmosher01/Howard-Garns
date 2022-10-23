@@ -44,7 +44,7 @@ public class Generator {
     private static class SolveContext {
         int branchScore;
         int count;
-        int[] problem = new int[ELEMENTS];
+        final int[] problem = new int[ELEMENTS];
     }
 
     private static int singleton(int v) {

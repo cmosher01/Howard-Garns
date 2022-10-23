@@ -8,7 +8,7 @@ import nu.mine.mosher.sudoku.gui.exception.UserCancelled;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
 
 import static javax.swing.JComponent.WHEN_FOCUSED;
 

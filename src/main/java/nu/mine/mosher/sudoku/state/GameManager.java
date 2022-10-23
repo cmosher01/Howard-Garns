@@ -3,11 +3,11 @@
  */
 package nu.mine.mosher.sudoku.state;
 
-import nu.mine.mosher.sudoku.util.*;
+import nu.mine.mosher.sudoku.util.Script;
 
 import javax.swing.*;
 import java.awt.Toolkit;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
 import java.io.*;
 import java.text.ParseException;
 import java.util.*;
@@ -214,7 +214,7 @@ public class GameManager /*extends Observable*/ implements Cloneable {
 
     private JMenuItem itemRedo;
     private JMenuItem itemUndo;
-    private Observable observable = new Observable() {
+    private final Observable observable = new Observable() {
         @Override
         public void notifyObservers() {
             setChanged();

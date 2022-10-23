@@ -7,7 +7,7 @@ import nu.mine.mosher.sudoku.gui.FrameManager;
 import nu.mine.mosher.sudoku.state.GameManager;
 
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
 
 public class CheckerManager {
     public CheckerManager(final GameManager gameToCheck, final FrameManager framer) {

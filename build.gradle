@@ -1,9 +1,46 @@
-def inc(module) {
-    apply from: "${projectDir}/gradle/${module}.gradle"
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
+    id 'org.beryx.runtime' version '1.12.7'
+    id 'com.coditory.manifest' version '0.2.1'
 }
 
-inc('version')
-inc('project')
-inc('dependencies')
-inc('test')
-inc('package')
+version = '1.4.0'
+
+group = 'nu.mine.mosher.sudoku'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of 17
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: 'latest.release'
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: 'latest.release'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+application {
+    mainClass = 'nu.mine.mosher.sudoku.HowardGarns'
+}
+
+jar {
+    manifest {
+        attributes(
+            'Specification-Version': manifest.attributes.get('Implementation-Version'),
+            'Implementation-Version': manifest.attributes.get('Implementation-Version').toString()+'+'+manifest.attributes.get('SCM-Commit-Hash').toString()
+        )
+    }
+}
+
+assemble {
+    dependsOn tasks.jpackage
+}

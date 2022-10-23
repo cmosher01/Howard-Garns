@@ -8,12 +8,11 @@ import nu.mine.mosher.sudoku.gui.exception.UserCancelled;
 import nu.mine.mosher.sudoku.state.GameManager;
 
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.awt.event.WindowListener;
 import java.awt.image.MemoryImageSource;
 import java.io.*;
-import java.util.*;
+import java.util.Optional;
 
 public class FrameManager implements Closeable {
     public FrameManager(final GameManager game) {
